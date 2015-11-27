@@ -21,8 +21,7 @@
         },
         {
             "id": "result_items",
-            "title":"events
-            items"
+            "title":"events items"
         }
     ],
     /* Required.A display name for the module */
