@@ -4,23 +4,27 @@
 {
     //Required. Inputs the module expects.
     "inputs": [
-        //e.g.
-        /*
-        {
-            "id": "from",
-            "title":"From"
+          {
+            "id": "VENUE_ID",
+            "title":"VENUE_ID"
         }
-        */
     ],
     //Required. Outputs the module emits.
     "outputs": [
-      //e.g.
-      /*
         {
-            "id": "from",
-            "title":"From"
+            "id": "result_count",
+            "title":"events count"
+        },
+        {
+            "id": "result summary",
+            "title":"events summary"
+        },
+        {
+            "id": "result_items",
+            "title":"events
+            items"
         }
-      */
     ],
-    "title": "Foursquare Get Events" /* Required.A display name for the module */
+    /* Required.A display name for the module */
+    "title": "Foursquare Get Events"
 }
