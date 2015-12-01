@@ -62,7 +62,7 @@ module.exports = {
             }
         });
 
-        if (!dexter.environment('FOURSQUARE_OAUTH_TOKEN') && (!dexter.environment('FOURSQUARE_CLIENT_ID') && !dexter.environment('FOURSQUARE_CLIENT_SECRET'))) {
+        if (!dexter.environment('FOURSQUARE_OAUTH_TOKEN') && (!dexter.environment('FOURSQUARE_CLIENT_ID') || !dexter.environment('FOURSQUARE_CLIENT_SECRET'))) {
 
             notIncludeFields.env.push('FOURSQUARE_OAUTH_TOKEN or (FOURSQUARE_CLIENT_ID and FOURSQUARE_CLIENT_SECRET)');
         }
