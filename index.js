@@ -28,8 +28,11 @@ var reqInputs = {
         'VENUE_ID'
     ],
     env: [
-        'FOURSQUARE_CLIENT_ID',
-        'FOURSQUARE_CLIENT_SECRET'
+        [
+            'FOURSQUARE_CLIENT_ID',
+            'FOURSQUARE_CLIENT_SECRET'
+        ],
+        ['FOURSQUARE_OAUTH_TOKEN']
     ]
 };
 
@@ -59,12 +62,10 @@ module.exports = {
             }
         });
 
-        _.map(reqInputs.env, function (inputField) {
-            if (_.isUndefined(dexter.environment(inputField))) {
+        if (!dexter.environment('FOURSQUARE_OAUTH_TOKEN') && (!dexter.environment('FOURSQUARE_CLIENT_ID') && !dexter.environment('FOURSQUARE_CLIENT_SECRET'))) {
 
-                notIncludeFields.env.push(inputField)
-            }
-        });
+            notIncludeFields.env.push('FOURSQUARE_OAUTH_TOKEN or (FOURSQUARE_CLIENT_ID and FOURSQUARE_CLIENT_SECRET)');
+        }
 
         var err = '';
 
@@ -90,11 +91,20 @@ module.exports = {
      * @returns {{client_id: (*|{}|{FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET}), client_secret: (*|{}|{FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET})}}
      */
     foursquareAuthParams: function (dexter) {
+        var res = {};
 
-        return _.merge({
-            client_id: dexter.environment('FOURSQUARE_CLIENT_ID'),
-            client_secret: dexter.environment('FOURSQUARE_CLIENT_SECRET')
-        }, mainFoursquareAuthParam);
+        if (dexter.environment('FOURSQUARE_OAUTH_TOKEN')) {
+            res = {
+                oauth_token: dexter.environment('FOURSQUARE_OAUTH_TOKEN')
+            };
+        } else {
+            res = {
+                client_id: dexter.environment('FOURSQUARE_CLIENT_ID'),
+                client_secret: dexter.environment('FOURSQUARE_CLIENT_SECRET')
+            };
+        }
+
+        return _.merge(res, mainFoursquareAuthParam);
     },
 
     /**
